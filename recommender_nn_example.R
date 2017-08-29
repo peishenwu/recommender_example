@@ -24,18 +24,6 @@ embed_user <- input_user %>% layer_embedding(input_dim = n_users,
 embed_movie <- input_movie %>% layer_embedding(input_dim = n_movies, 
                                                output_dim = n_factors, 
                                                input_length = 1)
-##bias
-bias_user <- input_user %>% layer_embedding(input_dim = n_users, 
-                                            output_dim = 1, 
-                                            input_length = 1) %>% layer_flatten
-
-bias_movie <- input_movie %>% layer_embedding(input_dim = n_movies, 
-                                              output_dim = 1, 
-                                              input_length = 1) %>% layer_flatten
-#
-#preds <- layer_dot(list(embed_user, embed_movie), axes = -1) %>% layer_flatten 
-#preds <- layer_add(inputs = list(preds, bias_user))
-#preds <- layer_add(inputs = list(preds, bias_movie))
 
 ## use a neural net instead of SVD
 preds <- layer_concatenate(inputs = list(embed_user, embed_movie), axis = -1) %>% layer_flatten %>% 
